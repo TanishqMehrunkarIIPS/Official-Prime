@@ -1,56 +1,55 @@
 "use strict";
 
-const fs = require('node:fs');
-const path = require('node:path');
-const { Client, Collection,GatewayIntentBits} = require('discord.js');
-const startServer=require("./server");
+const fs = require("node:fs");
+const path = require("node:path");
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const startServer = require("./server");
 
-const client = new Client(
-{
-    intents:
-    [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildVoiceStates
-    ]
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildVoiceStates,
+  ],
 });
 
 client.commands = new Collection();
 
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandsPath = path.join(__dirname, "commands");
+const commandFiles = fs
+  .readdirSync(commandsPath)
+  .filter((file) => file.endsWith(".js"));
 
-for (const file of commandFiles)
-{
+for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
   client.commands.set(command.data.name, command);
 }
 
 startServer();
-module.exports=client;
-const binMicWale=require("./features/binMicWale");
+module.exports = client;
+const binMicWale = require("./features/binMicWale");
 binMicWale();
-const bump=require("./features/bump");
+const bump = require("./features/bump");
 bump();
-const distubeFunc=require("./features/distube");
+const distubeFunc = require("./features/distube");
 distubeFunc();
-const interactionFunc=require("./features/interaction");
+const interactionFunc = require("./features/interaction");
 interactionFunc();
-const naam=require("./features/naam");
+const naam = require("./features/naam");
 naam();
-const onReady=require("./features/onReady");
+const onReady = require("./features/onReady");
 onReady();
-const pingPong=require("./features/pingPong");
+const pingPong = require("./features/pingPong");
 pingPong();
-const spam=require("./features/spam");
+const spam = require("./features/spam");
 spam();
-const speech=require("./features/speech");
+const speech = require("./features/speech");
 speech();
-const vcUpdate=require("./features/vcUpdate");
+const vcUpdate = require("./features/vcUpdate");
 vcUpdate();
-const help=require("./features/help");
+const help = require("./features/help");
 help();
-client.login(process.env.token);
+client.login();
